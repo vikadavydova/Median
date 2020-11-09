@@ -1,0 +1,7 @@
+D:\Programming\C#\Тестовое\Median\Median\Median\bin\Debug\Median.exe.config
+D:\Programming\C#\Тестовое\Median\Median\Median\bin\Debug\Median.exe
+D:\Programming\C#\Тестовое\Median\Median\Median\bin\Debug\Median.pdb
+D:\Programming\C#\Тестовое\Median\Median\Median\obj\Debug\Median.csprojAssemblyReference.cache
+D:\Programming\C#\Тестовое\Median\Median\Median\obj\Debug\Median.csproj.CoreCompileInputs.cache
+D:\Programming\C#\Тестовое\Median\Median\Median\obj\Debug\Median.exe
+D:\Programming\C#\Тестовое\Median\Median\Median\obj\Debug\Median.pdb
