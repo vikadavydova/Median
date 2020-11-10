@@ -12,12 +12,12 @@ namespace ConsoleApp1
 {
     class Program
     {
-        private const int PORT = 2012;
-        private const string SERVER = "88.212.241.115";
+        private const int port = 2012;
+        private const string server = "88.212.241.115";
         private const int amountOfNumbers = 2018;
         private const int amountOfTasks = 250;
         private static int[] numbers = new int[amountOfNumbers];
-        static object locker = new object();
+        //static object locker = new object();
         static int currentI = 0;
 
 
@@ -26,16 +26,17 @@ namespace ConsoleApp1
 
             Task[] tasks = new Task[amountOfTasks];
 
-            for (int i = 1; i < amountOfTasks + 1; i++)
+            for (int i = 0; i < amountOfTasks; i++)
             {
-                tasks[i - 1] = new Task(() => GetResponse());
-                tasks[i - 1].Start();
+                tasks[i] = new Task(() => GetResponse());
+                tasks[i].Start();
             }
 
             Task.WaitAll(tasks);
 
             Array.Sort(numbers);
-            Console.WriteLine($"Итоговый ответ {(numbers[amountOfNumbers / 2 - 1] + numbers[amountOfNumbers / 2]) / 2}");
+            double result = (numbers[amountOfNumbers / 2 - 1] + numbers[amountOfNumbers / 2]) / 2;
+            Console.WriteLine($"Итоговый ответ {result}");
             Console.Read();
         }
 
@@ -54,7 +55,7 @@ namespace ConsoleApp1
                 {
                     try
                     {
-                        client.Connect(SERVER, PORT);
+                        client.Connect(server, port);
                         byte[] data = new byte[256];
                         using (NetworkStream stream = client.GetStream())
                         {
@@ -65,10 +66,11 @@ namespace ConsoleApp1
                                 //checking if the request worked out correctly
                                 if (isResponseReceived)
                                 {
-                                    lock (locker)
+                                    /*lock (locker)
                                     {
                                         currentState = ++currentI; ;
-                                    }
+                                    }*/
+                                    currentState = Interlocked.Increment(ref currentI);
                                     prevState = currentState;
                                     isResponseReceived = false;
                                     if (currentState > amountOfNumbers)
@@ -106,10 +108,6 @@ namespace ConsoleApp1
                                 isResponseReceived = true;
                             }
                         }
-                    }
-                    catch (SocketException e)
-                    {
-                        continue;
                     }
                     catch (Exception e)
                     {
